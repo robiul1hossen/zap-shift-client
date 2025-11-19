@@ -50,14 +50,16 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex="-1"
-            className=" menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+            className="font-medium menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
             {links}
           </ul>
         </div>
         <a className=" text-xl">{<Logo />}</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 flex gap-6">{links}</ul>
+        <ul className="font-medium menu menu-horizontal px-1 flex gap-6">
+          {links}
+        </ul>
       </div>
       <div className="navbar-end">
         <a className="btn btn-primary text-[#1F1F1F]">Button</a>
