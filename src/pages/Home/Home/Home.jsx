@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Banner from "../Banner";
 import HowItWorks from "../HowItWorks";
 import OurServices from "../OurServices";
@@ -8,6 +8,7 @@ import CustomerReviews from "../CustomerReviews";
 import Footer from "../../../components/Footer";
 import Faq from "../Faq";
 
+const reviewsPromise = fetch("./reviews.json").then((res) => res.json());
 const Home = () => {
   return (
     <div>
@@ -16,7 +17,9 @@ const Home = () => {
       <OurServices />
       <Brands />
       <Features />
-      <CustomerReviews />
+      <Suspense fallback={<p>Loading...</p>}>
+        <CustomerReviews reviewsPromise={reviewsPromise} />
+      </Suspense>
       <Faq />
       <Footer />
     </div>
