@@ -4,7 +4,7 @@ import "react-tabs/style/react-tabs.css";
 
 const AboutUs = () => {
   return (
-    <div>
+    <div className="bg-white p-6 rounded-2xl mb-[100px]">
       <div className=" text-secondary">
         <h2 className="text-4xl font-extrabold mb-4">About Us</h2>
         <p className=" w-1/2 text-[#606060]">

@@ -9,3 +9,9 @@
   --color-secondary: #03373d;
   --color-tertiary: #0b0b0b;
 }
+a.active {
+  background-color: #caeb66;
+  padding: 6px 15px;
+  border-radius: 10px;
+  margin-top: -6px;
+}
