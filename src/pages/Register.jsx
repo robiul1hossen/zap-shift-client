@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 
 const Register = () => {
-  const { createUser, updateUser } = use(AuthContext);
+  const { createUser, updateUser, loginWithGoogle } = use(AuthContext);
   const {
     register,
     handleSubmit,
@@ -38,6 +38,11 @@ const Register = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then(() => console.log("google login successful"))
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -94,7 +99,9 @@ const Register = () => {
               <p className="text-[#606060] text-center font-medium text-xl">
                 Or
               </p>
-              <button className="btn bg-white text-black border-[#e5e5e5]">
+              <button
+                onClick={handleGoogleLogin}
+                className="btn bg-white text-black border-[#e5e5e5]">
                 <svg
                   aria-label="Google logo"
                   width="16"

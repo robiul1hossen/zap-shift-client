@@ -5,7 +5,6 @@ import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const { user, logoutUser } = use(AuthContext);
-  console.log(user);
   const handleLogout = () => {
     logoutUser()
       .then(() => console.log("logout successful"))
@@ -23,7 +22,7 @@ const Navbar = () => {
       <NavLink to="/">
         <li>Coverage</li>
       </NavLink>
-      <NavLink to="/">
+      <NavLink to="/about">
         <li>About Us</li>
       </NavLink>
       <NavLink to="/">
@@ -74,9 +73,10 @@ const Navbar = () => {
         {user ? (
           <>
             <img
+              referrerPolicy="no-referrer"
               className="w-10 h-10 rounded-full border me-3 cursor-pointer"
-              src={user.photoURL}
-              alt={user.displayName}
+              src={user?.photoURL}
+              alt={user?.displayName}
             />
             <Link to="/">
               <div

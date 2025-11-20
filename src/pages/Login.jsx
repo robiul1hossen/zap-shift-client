@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 
 const Login = () => {
-  const { loginUser } = use(AuthContext);
+  const { loginUser, loginWithGoogle } = use(AuthContext);
   const {
     register,
     handleSubmit,
@@ -19,6 +19,11 @@ const Login = () => {
       .catch((error) => {
         console.log(error);
       });
+  };
+  const handleGoogleLogin = () => {
+    loginWithGoogle()
+      .then(() => console.log("google login successful"))
+      .catch((error) => console.log(error));
   };
   return (
     <div>
@@ -57,7 +62,9 @@ const Login = () => {
               <p className="text-[#606060] text-center font-medium text-xl">
                 Or
               </p>
-              <button className="btn bg-white text-black border-[#e5e5e5]">
+              <button
+                onClick={handleGoogleLogin}
+                className="btn bg-white text-black border-[#e5e5e5]">
                 <svg
                   aria-label="Google logo"
                   width="16"
