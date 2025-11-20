@@ -1,8 +1,11 @@
-import React from "react";
+import React, { use } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const Register = () => {
+  const { createUser, updateUser } = use(AuthContext);
   const {
     register,
     handleSubmit,
@@ -10,7 +13,31 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (data) => {
-    console.log(data);
+    const profileImg = data.photo[0];
+    createUser(data.email, data.password)
+      .then(() => {
+        const formData = new FormData();
+        formData.append("image", profileImg);
+        const imgHostingUrl = `https://api.imgbb.com/1/upload?key=${
+          import.meta.env.VITE_image_host_key
+        }`;
+        axios
+          .post(imgHostingUrl, formData)
+          .then((res) => {
+            console.log(res.data.data.url);
+            const updatedUser = {
+              displayName: data.name,
+              photoURL: res.data.data.url,
+            };
+            updateUser(updatedUser)
+              .then(() => console.log("user updated successfully"))
+              .catch((error) => console.log(error));
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

@@ -1,8 +1,17 @@
-import React from "react";
+import React, { use } from "react";
 import { Link, NavLink } from "react-router";
 import Logo from "./Logo";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
+  const { user, logoutUser } = use(AuthContext);
+  console.log(user);
+  const handleLogout = () => {
+    logoutUser()
+      .then(() => console.log("logout successful"))
+      .catch((error) => console.log(error));
+  };
+
   const links = (
     <>
       <NavLink to="/">
@@ -62,12 +71,32 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <Link to="/login" className="btn  text-[#1F1F1F] mr-2">
-          Sing In
-        </Link>
-        <Link to="/register" className="btn btn-primary text-[#1F1F1F]">
-          Sign Up
-        </Link>
+        {user ? (
+          <>
+            <img
+              className="w-10 h-10 rounded-full border me-3 cursor-pointer"
+              src={user.photoURL}
+              alt={user.displayName}
+            />
+            <Link to="/">
+              <div
+                onClick={handleLogout}
+                className="btn btn-primary text-[#1F1F1F]">
+                Logout
+              </div>
+            </Link>
+          </>
+        ) : (
+          <>
+            {" "}
+            <Link to="/login" className="btn  text-[#1F1F1F] mr-2">
+              Sing In
+            </Link>
+            <Link to="/register" className="btn btn-primary text-[#1F1F1F]">
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

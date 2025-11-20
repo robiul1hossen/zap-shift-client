@@ -10,7 +10,6 @@ import ReviewSlideCard from "../../components/ReviewSlideCard";
 
 const CustomerReviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
-  console.log(reviews);
   return (
     <div className="mt-[100px] ">
       <img className="mx-auto" src={customer_top} alt="" />
