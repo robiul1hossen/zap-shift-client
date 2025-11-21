@@ -7,6 +7,7 @@ import Register from "../pages/Register";
 import AboutUs from "../pages/AboutUs";
 import SendParcel from "../pages/Home/SendParcel";
 import Coverage from "../pages/Coverage";
+import Error from "../pages/Error";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       {
         path: "/send-parcel",
         Component: SendParcel,
+        loader: () => fetch("/warehouses.json").then((res) => res.json()),
       },
       {
         path: "/coverage",
@@ -45,5 +47,9 @@ export const router = createBrowserRouter([
         Component: Register,
       },
     ],
+  },
+  {
+    path: "*",
+    Component: Error,
   },
 ]);
