@@ -1,15 +1,18 @@
-import React from "react";
+import React, { use } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { AuthContext } from "../../context/AuthContext";
 
 const SendParcel = () => {
+  const { user } = use(AuthContext);
   const warehouses = useLoaderData();
   const axiosSecure = useAxiosSecure();
   const allRegion = warehouses.map((region) => region.region);
   const region = [...new Set(allRegion)];
-
+  console.log(user?.email);
+  console.log(user?.displayName);
   const {
     register,
     handleSubmit,
@@ -44,7 +47,8 @@ const SendParcel = () => {
         }
       }
     }
-    data.price = cost;
+    data.price = Number(cost);
+    data.parcelWeight = Number(data.parcelWeight);
 
     Swal.fire({
       title: "Are you sure?",
@@ -150,6 +154,8 @@ const SendParcel = () => {
                 <label className="label">Sender Name</label>
                 <input
                   type="text"
+                  defaultValue={user?.displayName}
+                  readOnly
                   className="input outline-none w-full"
                   placeholder="Sender Name"
                   {...register("senderName", { required: true })}
@@ -157,6 +163,22 @@ const SendParcel = () => {
                 {errors.senderName && (
                   <span className="text-xs text-red-500">
                     Sender Name is required
+                  </span>
+                )}
+              </div>
+              {/* sender email  */}
+              <div className="w-full mt-5">
+                <label className="label">Sender Email</label>
+                <input
+                  type="email"
+                  defaultValue={user?.email}
+                  className="input outline-none w-full"
+                  placeholder="Sender Email"
+                  {...register("senderEmail", { required: true })}
+                />
+                {errors.senderEmail && (
+                  <span className="text-xs text-red-500">
+                    Sender Email is required
                   </span>
                 )}
               </div>
