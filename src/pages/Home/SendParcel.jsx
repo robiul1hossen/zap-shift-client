@@ -1,10 +1,12 @@
 import React from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const SendParcel = () => {
   const warehouses = useLoaderData();
-  // console.log(warehouses);
+  const axiosSecure = useAxiosSecure();
   const allRegion = warehouses.map((region) => region.region);
   const region = [...new Set(allRegion)];
 
@@ -17,7 +19,6 @@ const SendParcel = () => {
 
   const handleSendParcel = (data) => {
     let cost = 0;
-
     console.log(data);
     const sameDistrict = data.senderDistrict === data.receiverDistrict;
     if (data.parcelType === "Document") {
@@ -44,6 +45,27 @@ const SendParcel = () => {
       }
     }
     data.price = cost;
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: `Your parcel cost $${data.price}, want to proceed?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.post("/parcels", data).then((res) => {
+          console.log(res.data);
+          Swal.fire({
+            title: "Sent!",
+            text: "Your parcel has been sent.",
+            icon: "success",
+          });
+        });
+      }
+    });
   };
   const senderRegion = useWatch({ control, name: "senderRegion" });
   const receiverRegion = useWatch({ control, name: "receiverRegion" });
