@@ -7,7 +7,7 @@ import Features from "../Features";
 import CustomerReviews from "../CustomerReviews";
 import Faq from "../Faq";
 
-const reviewsPromise = fetch("./reviews.json").then((res) => res.json());
+const reviewsPromise = fetch("/reviews.json").then((res) => res.json());
 const Home = () => {
   return (
     <div>

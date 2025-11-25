@@ -10,6 +10,7 @@ import Coverage from "../pages/Coverage";
 import Error from "../pages/Error";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/RootLayout/DashboardLayout";
+import MyParcels from "../pages/Dashboard/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -24,11 +25,7 @@ export const router = createBrowserRouter([
         path: "/about",
         Component: AboutUs,
       },
-      {
-        path: "/send-parcel",
-        Component: SendParcel,
-        loader: () => fetch("/warehouses.json").then((res) => res.json()),
-      },
+
       {
         path: "/coverage",
         Component: Coverage,
@@ -57,6 +54,17 @@ export const router = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "my-parcels",
+        Component: MyParcels,
+      },
+      {
+        path: "send-parcel",
+        Component: SendParcel,
+        loader: () => fetch("/warehouses.json").then((res) => res.json()),
+      },
+    ],
   },
   {
     path: "*",

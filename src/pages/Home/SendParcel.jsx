@@ -81,7 +81,7 @@ const SendParcel = () => {
   };
 
   return (
-    <div className="bg-white p-10 rounded-2xl mb-[100px]">
+    <div className="bg-white p-10 rounded-b-2xl mb-[100px]">
       <div>
         <h2 className="text-4xl font-bold text-secondary">Send a Parcel</h2>
         <h4 className="text-2xl font-medium mt-4 text-secondary">
