@@ -11,6 +11,7 @@ import Error from "../pages/Error";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layouts/RootLayout/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels";
+import Payment from "../pages/Dashboard/Payment";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
         path: "send-parcel",
         Component: SendParcel,
         loader: () => fetch("/warehouses.json").then((res) => res.json()),
+      },
+      {
+        path: "payment/:id",
+        Component: Payment,
       },
     ],
   },
