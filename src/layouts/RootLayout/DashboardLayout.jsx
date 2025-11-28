@@ -2,6 +2,7 @@ import React from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { MdOutlineDeliveryDining } from "react-icons/md";
+import { FaRegCreditCard } from "react-icons/fa";
 
 const DashboardLayout = () => {
   return (
@@ -29,7 +30,7 @@ const DashboardLayout = () => {
               <path d="M14 10l2 2l-2 2"></path>
             </svg>
           </label>
-          <div className="px-4">Navbar Title</div>
+          <div className="px-4">Zap Shift Dashboard</div>
         </nav>
         {/* Page content here */}
         <Outlet />
@@ -75,6 +76,15 @@ const DashboardLayout = () => {
                 to="/dashboard/my-parcels">
                 <CiDeliveryTruck />
                 <span className="is-drawer-close:hidden">My Parcels</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Payment History"
+                to="/dashboard/payment-history">
+                <FaRegCreditCard />
+                <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
             <li>
