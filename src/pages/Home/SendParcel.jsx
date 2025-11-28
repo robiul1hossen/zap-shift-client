@@ -1,18 +1,18 @@
 import React, { use } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { AuthContext } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 const SendParcel = () => {
   const { user } = use(AuthContext);
   const warehouses = useLoaderData();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const allRegion = warehouses.map((region) => region.region);
   const region = [...new Set(allRegion)];
-  console.log(user?.email);
-  console.log(user?.displayName);
   const {
     register,
     handleSubmit,
@@ -57,16 +57,14 @@ const SendParcel = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
+      confirmButtonText: "Proceed to pay",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure.post("/parcels", data).then((res) => {
-          console.log(res.data);
-          Swal.fire({
-            title: "Sent!",
-            text: "Your parcel has been sent.",
-            icon: "success",
-          });
+          if (res.data.insertedId) {
+            navigate("/dashboard/my-parcels");
+            toast.success("Your parcel has been created. Please pay.");
+          }
         });
       }
     });
@@ -121,7 +119,7 @@ const SendParcel = () => {
                   type="text"
                   className="input outline-none w-full"
                   placeholder="Parcel Name"
-                  {...register("name", { required: true })}
+                  {...register("parcelName", { required: true })}
                 />
                 {errors.name && (
                   <span className="text-xs text-red-500">

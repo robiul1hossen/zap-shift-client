@@ -67,15 +67,7 @@ const DashboardLayout = () => {
             </li>
 
             {/* my dashboard links */}
-            <li>
-              <NavLink
-                to="/dashboard/send-parcel"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Send A Parcel">
-                <MdOutlineDeliveryDining />
-                <span className="is-drawer-close:hidden">Send A Parcel</span>
-              </NavLink>
-            </li>
+
             <li>
               <NavLink
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -83,6 +75,15 @@ const DashboardLayout = () => {
                 to="/dashboard/my-parcels">
                 <CiDeliveryTruck />
                 <span className="is-drawer-close:hidden">My Parcels</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/dashboard/send-parcel"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Send A Parcel">
+                <MdOutlineDeliveryDining />
+                <span className="is-drawer-close:hidden">Send A Parcel</span>
               </NavLink>
             </li>
 

@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 import { useParams } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loader from "../../components/Loader";
@@ -14,7 +13,17 @@ const Payment = () => {
       return res.data;
     },
   });
-  console.log(parcel);
+  const handlePayment = async () => {
+    const paymentInfo = {
+      parcelName: parcel.parcelName,
+      parcelId: parcel._id,
+      senderEmail: parcel.senderEmail,
+      price: parcel.price,
+    };
+    const res = await axiosSecure.post(`/create-payment-session`, paymentInfo);
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
   if (isLoading) {
     return <Loader />;
   }
@@ -37,7 +46,7 @@ const Payment = () => {
           {/* Parcel Name */}
           <div className="border p-3 rounded-lg">
             <p className="text-gray-500 text-sm">Parcel Name</p>
-            <p className="font-medium">{parcel.name}</p>
+            <p className="font-medium">{parcel.parcelName}</p>
           </div>
 
           {/* Weight */}
@@ -131,8 +140,8 @@ const Payment = () => {
         {/* Pay Button */}
         <div className="mt-8 text-center">
           <button
-            onClick={() => alert("Proceed to Payment")}
-            className="bg-primary  hover:bg-green-400 text-secondary px-8 py-3 rounded-lg text-lg font-semibold shadow">
+            onClick={handlePayment}
+            className="bg-primary cursor-pointer hover:bg-green-400 text-secondary px-8 py-3 rounded-lg text-lg font-semibold shadow">
             Pay ৳ {parcel.price}
           </button>
         </div>

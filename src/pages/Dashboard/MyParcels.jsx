@@ -61,7 +61,7 @@ const MyParcels = () => {
             {parcels.map((parcel, i) => (
               <tr key={parcel._id}>
                 <th>{i + 1}</th>
-                <td>{parcel.name}</td>
+                <td>{parcel.parcelName}</td>
                 <td>{parcel.price}</td>
                 <td>
                   {parcel.paymentStatus === "paid" ? (
