@@ -14,7 +14,7 @@ const UsersManagement = () => {
       return res.data;
     },
   });
-  const handleMakeUser = (user) => {
+  const handleMakeAdmin = (user) => {
     const updatedInfo = { role: "admin" };
 
     Swal.fire({
@@ -27,13 +27,15 @@ const UsersManagement = () => {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/${user._id}`, updatedInfo).then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount) {
-            refetch();
-            toast.success(`${user.displayName} marked as an admin`);
-          }
-        });
+        axiosSecure
+          .patch(`/users/${user._id}/role`, updatedInfo)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.modifiedCount) {
+              refetch();
+              toast.success(`${user.displayName} marked as an admin`);
+            }
+          });
       }
     });
     //
@@ -51,13 +53,15 @@ const UsersManagement = () => {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.patch(`/users/${user._id}`, updatedInfo).then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount) {
-            refetch();
-            toast.success(`${user.displayName} removed from admin`);
-          }
-        });
+        axiosSecure
+          .patch(`/users/${user._id}/role`, updatedInfo)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.modifiedCount) {
+              refetch();
+              toast.success(`${user.displayName} removed from admin`);
+            }
+          });
       }
     });
   };
@@ -109,7 +113,7 @@ const UsersManagement = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => handleMakeUser(user)}
+                      onClick={() => handleMakeAdmin(user)}
                       className="btn bg-green-400">
                       <FaUserShield />
                     </button>
