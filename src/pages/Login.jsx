@@ -2,11 +2,13 @@ import React, { use } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Login = () => {
   const { loginUser, loginWithGoogle } = use(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -25,8 +27,17 @@ const Login = () => {
   };
   const handleGoogleLogin = () => {
     loginWithGoogle()
-      .then(() => {
-        navigate(`${location?.state ? location?.state : "/"}`);
+      .then((res) => {
+        const userInfo = {
+          email: res.user.email,
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            navigate(`${location?.state ? location?.state : "/"}`);
+          }
+        });
       })
       .catch((error) => console.log(error));
   };

@@ -1,11 +1,15 @@
 import React, { use } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Register = () => {
   const { createUser, updateUser, loginWithGoogle } = use(AuthContext);
+  const axiosSecure = useAxiosSecure();
+  const location = useLocation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,7 +28,17 @@ const Register = () => {
         axios
           .post(imgHostingUrl, formData)
           .then((res) => {
-            console.log(res.data.data.url);
+            const userInfo = {
+              email: data.email,
+              displayName: data.name,
+              photoURL: res.data.data.url,
+            };
+            axiosSecure.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                navigate(`${location?.state ? location?.state : "/"}`);
+              }
+            });
+
             const updatedUser = {
               displayName: data.name,
               photoURL: res.data.data.url,
@@ -41,7 +55,18 @@ const Register = () => {
   };
   const handleGoogleLogin = () => {
     loginWithGoogle()
-      .then(() => console.log("google login successful"))
+      .then((res) => {
+        const userInfo = {
+          email: res.user.email,
+          displayName: res.user.displayName,
+          photoURL: res.user.photoURL,
+        };
+        axiosSecure.post("/users", userInfo).then((res) => {
+          if (res.data.insertedId) {
+            navigate(`${location?.state ? location?.state : "/"}`);
+          }
+        });
+      })
       .catch((error) => console.log(error));
   };
 
