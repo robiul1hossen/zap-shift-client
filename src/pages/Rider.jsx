@@ -4,9 +4,10 @@ import { AuthContext } from "../context/AuthContext";
 import { useLoaderData } from "react-router";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { toast } from "react-toastify";
+import Loader from "../components/Loader";
 
 const Rider = () => {
-  const { user } = use(AuthContext);
+  const { user, loading } = use(AuthContext);
   const warehouses = useLoaderData();
   const axiosSecure = useAxiosSecure();
   const allRegion = warehouses?.map((region) => region.region);
@@ -32,6 +33,10 @@ const Rider = () => {
     const districts = regionDistricts.map((d) => d.district);
     return districts;
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>

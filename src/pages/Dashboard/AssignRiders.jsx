@@ -8,10 +8,10 @@ const AssignRiders = () => {
   const [selectedParcel, setSelectParcel] = useState({});
   const riderModalRef = useRef();
   const { data: parcels = [] } = useQuery({
-    queryKey: ["parcels", "pending-pickup"],
+    queryKey: ["parcels", "pending_pickup"],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/parcels?deliveryStatus=pending-pickup`
+        `/parcels?deliveryStatus=pending_pickup`
       );
       return res.data;
       // TODO remove parcel from assign rider page
@@ -37,6 +37,7 @@ const AssignRiders = () => {
       riderName: rider.name,
       riderEmail: rider.email,
       parcelId: selectedParcel._id,
+      trackingId: selectedParcel.trackingId,
     };
     axiosSecure
       .patch(`/parcels/${selectedParcel._id}`, riderInfo)
