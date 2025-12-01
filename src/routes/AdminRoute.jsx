@@ -8,14 +8,13 @@ import Forbidden from "../components/Forbidden";
 const AdminRoute = ({ children }) => {
   const { user, loading } = use(AuthContext);
   const { role, roleLoading } = useRole();
-  console.log("form admin route", role);
   if (loading || roleLoading) {
     return <Loader></Loader>;
   }
   if (!user) {
     return <Navigate to="/login"></Navigate>;
   }
-  if (role.data.role !== "admin") {
+  if (role !== "admin") {
     return <Forbidden />;
   }
   return children;

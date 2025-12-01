@@ -10,10 +10,10 @@ const useRole = () => {
     queryKey: ["user-role", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user.email}/role`);
-      return res;
+      return res.data.role;
     },
   });
-  console.log("from use role", role);
+  // console.log("from use role", role);
   return { role, isLoading };
 };
 

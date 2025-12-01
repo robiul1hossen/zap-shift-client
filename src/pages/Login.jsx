@@ -32,6 +32,7 @@ const Login = () => {
           email: res.user.email,
           displayName: res.user.displayName,
           photoURL: res.user.photoURL,
+          createdAt: new Date(),
         };
         axiosSecure.post("/users", userInfo).then((res) => {
           if (res.data.insertedId) {

@@ -52,6 +52,7 @@ const MyParcels = () => {
               <th>Name</th>
               <th>Price</th>
               <th>Payment</th>
+              <th>Tracking ID</th>
               <th>Delivery Status</th>
               <th>Action</th>
             </tr>
@@ -65,7 +66,7 @@ const MyParcels = () => {
                 <td>{parcel.price}</td>
                 <td>
                   {parcel.paymentStatus === "paid" ? (
-                    <span className="text-green-400">Paid</span>
+                    <span className="text-green-800">Paid</span>
                   ) : (
                     <Link to={`/dashboard/payment/${parcel._id}`}>
                       <button className="btn btn-primary btn-xs text-secondary">
@@ -74,6 +75,7 @@ const MyParcels = () => {
                     </Link>
                   )}
                 </td>
+                <td>{parcel?.trackingId}</td>
                 <td>{parcel?.deliveryStatus}</td>
                 <td className="flex gap-1">
                   <button className="btn btn-xs">

@@ -32,6 +32,7 @@ const Register = () => {
               email: data.email,
               displayName: data.name,
               photoURL: res.data.data.url,
+              createdAt: new Date(),
             };
             axiosSecure.post("/users", userInfo).then((res) => {
               if (res.data.insertedId) {
@@ -60,6 +61,7 @@ const Register = () => {
           email: res.user.email,
           displayName: res.user.displayName,
           photoURL: res.user.photoURL,
+          createdAt: new Date(),
         };
         axiosSecure.post("/users", userInfo).then((res) => {
           if (res.data.insertedId) {
